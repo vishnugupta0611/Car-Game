@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="car.css">
+</head>
+
+<body>
+    <div class="start">
+        <div class="bg-blur"></div>
+        <div class="content">
+            <h1>Welcome to the Car Game</h1>
+            <button id="startButton">Start Game</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sky">
+            <div class="tree">
+
+            </div>
+            <div class="track">
+
+            </div>
+            <div class="car">
+                <div class="left"><img src="car_wheel_left.png" alt=""></div>
+                <div class="right"><img src="car_wheel_right.png" alt=""></div>
+            </div>
+
+        </div>
+
+
+        <div class="toast">
+
+            kya bhai ab ghar leke jayega kya
+
+        </div>
+
+    </div>
+    <div class="sizeError">
+        <h1>😔 Sorry!</h1>
+        <p>This site is designed for desktop only.</p>
+        <div class="creative-box"></div>
+    </div>
+
+    <script>
+
+        const startButton = document.getElementById('startButton');
+        const startScreen = document.querySelector('.start');
+        const gameContainer = document.querySelector('.container');
+
+        startButton.addEventListener('click', () => {
+            startScreen.style.display = 'none'; 
+            gameContainer.style.display = 'flex'; 
+            audio.play()
+        });
+
+
+        const toast = document.querySelector('.toast')
+        let position = 20;
+        let update = -300;
+        var audio = new Audio('sound.mp3')
+        let song = new Audio('rock.mp3')
+
+        audio.loop = true;
+       
+        const car = document.querySelector('.car')
+
+        window.addEventListener('keydown', (e) => {
+            let animated = document.querySelector(".track");
+            console.log(e)
+            if (e.key === "ArrowDown") {
+                if (update < 0) {
+                    update += 10;
+                }
+
+                if (audio.volume > 0.2) {
+                    audio.volume -= 0.05;
+
+                }
+
+
+
+
+            } else if (e.key === "ArrowUp") {
+                if (update > -600) {
+                    update -= 20;
+                }
+
+                if (audio.volume < 0.5) {
+                    audio.volume += 0.05;
+
+                }
+            }
+            else if (e.key === 'ArrowRight') {
+                if (position < 75) {
+                    position += 4;
+                    car.style.left = `${position}%`
+                }
+                else {
+                    audio.pause()
+                    song.play()
+                    clearIntervalid=(()=>{
+                        audio.play()
+                        song.pause()
+                       
+                    },3000)
+                    toast.style.opacity = `${100}%`
+                    setInterval(() => {
+                        toast.style.opacity = `${0}`
+                    }, 5000)
+                }
+                console.log(position)
+
+
+            }
+            else if (e.key === 'ArrowLeft') {
+                if (position > 5) {
+                    position -= 3;
+                    car.style.left = `${position}%`
+                }
+
+            }
+
+            animated.style.transform = `translateX(${update}px)`;
+
+            // Calculate new animation duration based on update
+            const newDuration = calculateAnimationDuration(update);
+            console.log(newDuration)
+            animated.style.animationDuration = `${newDuration}s`;
+
+            console.log("this is update", update);
+        });
+
+        function calculateAnimationDuration(update) {
+           
+            const baseDuration = 5; 
+            const maxUpdate = -700; 
+
+           
+            const durationMultiplier = baseDuration / Math.abs(maxUpdate);
+
+            // Calculate the new duration
+            const newDuration = Math.abs(update) * durationMultiplier;
+
+            return newDuration;
+        }
+    </script>
+</body>
+
+</html>
