@@ -105,7 +105,11 @@ animation: rotate 0.4s linear  infinite forwards;
 
 /* Media Query for screens less than 800px */
 @media (max-width: 800px) {
-    .container {
+    body{
+        display: flex;
+        justify-content: center;
+    }
+    .mainbox {
         display: none; /* Hide the main content */
     }
     .sizeError {
